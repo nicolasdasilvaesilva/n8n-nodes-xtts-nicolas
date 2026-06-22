@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-xtts-nicolas",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Custom XTTS node for n8n",
   "keywords": [
     "n8ncommunity-node-package"
