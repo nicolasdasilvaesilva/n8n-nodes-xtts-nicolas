@@ -139,6 +139,48 @@ export class Xtts implements INodeType {
 					},
 				},
 			},
+			{
+				displayName: 'Additional Fields',
+				name: 'additionalFields',
+				type: 'collection',
+				placeholder: 'Add Field',
+				default: {},
+				displayOptions: {
+					show: {
+						resource: ['audio'],
+						operation: ['speech'],
+					},
+				},
+				options: [
+					{
+						displayName: 'Speed',
+						name: 'speed',
+						type: 'number',
+						default: 1.10,
+						description: 'Voice speed (e.g., 1.10 for dynamic pacing)',
+					},
+					{
+						displayName: 'Temperature',
+						name: 'temperature',
+						type: 'number',
+						default: 0.85,
+						description: 'Voice variation/emotion (higher = more variation, similar to ElevenLabs Stability)',
+					},
+					{
+						displayName: 'Top P',
+						name: 'top_p',
+						type: 'number',
+						default: 0.85,
+						description: 'Similarity Boost equivalent (keeps voice close to reference)',
+					},
+					{
+						displayName: 'Top K',
+						name: 'top_k',
+						type: 'number',
+						default: 50,
+					},
+				],
+			},
 		],
 	};
 
@@ -180,6 +222,26 @@ export class Xtts implements INodeType {
 						json: true,
 						encoding: null, // Required to get binary data
 					};
+
+					const additionalFields = this.getNodeParameter('additionalFields', i) as {
+						speed?: number;
+						temperature?: number;
+						top_p?: number;
+						top_k?: number;
+					};
+
+					if (additionalFields.speed !== undefined) {
+						options.body.speed = additionalFields.speed;
+					}
+					if (additionalFields.temperature !== undefined) {
+						options.body.temperature = additionalFields.temperature;
+					}
+					if (additionalFields.top_p !== undefined) {
+						options.body.top_p = additionalFields.top_p;
+					}
+					if (additionalFields.top_k !== undefined) {
+						options.body.top_k = additionalFields.top_k;
+					}
 
 					if (apiKey) {
 						options.headers!['Authorization'] = `Bearer ${apiKey}`;
