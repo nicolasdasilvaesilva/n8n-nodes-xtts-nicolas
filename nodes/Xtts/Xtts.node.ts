@@ -12,7 +12,13 @@ export class Xtts implements INodeType {
 	description: INodeTypeDescription = {
 		displayName: 'XTTS',
 		name: 'xtts',
-		icon: 'file:logo-dark.png',
+		// The blue tile, not the flat mark. The Chatwoot node passes a
+		// light/dark pair, but that form needs a newer n8n-workflow than this
+		// package pins (0.137), where `icon` is typed as a plain string. A
+		// mark on its own tile carries its own contrast, so one file reads on
+		// both editor themes — a black-inked mark would vanish on the dark
+		// canvas. Switch to the pair if this ever moves to a newer n8n.
+		icon: 'file:indica-facil-azul.svg',
 		group: ['transform'],
 		version: 1,
 		subtitle: '={{$parameter["operation"]}}',
